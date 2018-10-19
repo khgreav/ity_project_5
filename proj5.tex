@@ -1,0 +1,208 @@
+\documentclass[hyperref={unicode}]{beamer}
+\usetheme{Warsaw}
+\usepackage{lmodern}
+\usepackage[czech]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsthm}
+\usepackage{tikz}
+\usetikzlibrary{shadows}
+\newtheorem*{customdefinition}{Definice}
+\newtheorem*{customsentence}{Věta}
+
+\title{Typografie a publikování}
+\subtitle{Projekt č.5 - Konečné automaty}
+\author{Karel Hanák}
+\institute{Vysoké učení technické v Brně \\ Fakulta informačních technologií}
+\date{\today}
+
+\begin{document}
+\frame{\titlepage}
+
+\begin{frame}
+\frametitle{Obsah}
+\tableofcontents
+\end{frame}
+
+\section{Konečné automaty}
+\begin{frame}
+\frametitle{Co je konečný automat?}
+
+Konečný automat model jednoduchého stroje, který se používá na rozhodnutí problému akceptování či zamítnutí slova z jazyka. \\~\\
+
+\pause
+
+Existují 2 základní druhy konečných automatů:
+\begin{itemize}
+\item Deterministický konečný automat
+\item Nedeterministický konečný automat
+\end{itemize}
+
+\pause
+
+\begin{customsentence}[1]\label{sen:1}
+Ke každému deterministickému konečnému automatu existuje ekvivalentní nedeterministický konečný automat.
+\end{customsentence}
+
+\end{frame}
+
+\section{Deterministický konečný automat}
+
+\begin{frame}
+\frametitle{Deterministický konečný automat - DFA}
+
+\begin{customdefinition}[1]\label{def:1}
+{\normalfont DFA} je uspořádaná pětice $(Q,\Sigma,\delta,q0,F)$, kde:
+\begin{itemize}
+\item $Q$ je konečná neprázdná množina stavů
+\item $\Sigma$ je konečná neprázdná abeceda
+\item $\delta$ je přechodová funkce ve tvaru $Q \times \Sigma \rightarrow Q$
+\item $q0$ je počáteční stav, pro který platí $q0 \in Q$
+\item $F$ je množina akceptujících stavů, pro kterou platí $F \subseteq Q$
+\end{itemize}
+\end{customdefinition}
+
+DFA má pro každou dvojici stav a symbol pouze jeden přechod.
+
+\end{frame}
+
+\section{Nedeterministický konečný automat}
+
+\begin{frame}
+\frametitle{Nedeterministický konečný automat - NFA}
+
+\begin{customdefinition}[2]\label{def:2}
+{\normalfont NFA} je uspořádaná pětice $(Q,\Sigma,\delta,q0,F)$, kde:
+\begin{itemize}
+\item $Q$ je konečná neprázdná množina stavů
+\item $\Sigma$ je konečná neprázdná abeceda
+\item $\delta$ je přechodová funkce ve tvaru $Q \times \Sigma \cup \{ \varepsilon \} \rightarrow 2^Q$
+\item $q0$ je počáteční stav, pro který platí $q0 \in Q$
+\item $F$ je množina akceptujících stavů, pro kterou platí $F \subseteq Q$
+\end{itemize}
+\end{customdefinition}
+
+NFA může mít pro každou dvojici stav a symbol libovolný počet přechodů.
+
+\end{frame}
+
+\section{Ukázka výpočtu}
+
+\begin{frame}
+\frametitle{Ukázka výpočtu}
+
+\begin{block}{Příklad 1}
+Mějme definován jazyk $L = \{ a.b^*.c \}$ a vstupní slovo $w = abbc$. \\
+Níže je znázorněn výpočet DFA nad vstupním slovem.
+\end{block}
+
+\begin{center}
+\begin{tikzpicture}
+
+\draw (0,0) circle [x radius=1, y radius=1] node [align=center] {q0};
+\draw[red] (1,0) -- (2,0);
+\draw[red] (2,0) -- (1.8,0.2);
+\draw[red] (2,0) -- (1.8,-0.2);
+\draw[red, thick] (1.5,0.2) node {a};
+\draw[red] (3,0) circle [x radius=1, y radius=1] node [align=center] {q1};
+\draw[rounded corners=8pt] (3,1) -- (3.3,1.5) -- (3,2) -- (2.7,1.5) -- (2.8,1.3);
+\draw (3.5,1.5) node {b};
+\draw (2.8,1.3) -- (2.6,1.5);
+\draw (2.8,1.3) -- (3,1.5);
+\draw (4,0) -- (5,0);
+\draw (5,0) -- (4.8,0.2);
+\draw (5,0) -- (4.8,-0.2);
+\draw (4.5,0.2) node {c};
+\draw (6,0) circle [x radius=1, y radius=1] node [align=center] {F};
+\draw (6,0) circle [x radius=0.9, y radius=0.9];
+
+\end{tikzpicture}
+\end{center}
+
+Nejprve se provede pro dvojici (q0,a) přechod do q1.
+
+\end{frame}
+
+\begin{frame}
+\frametitle{Ukázka výpočtu 2}
+
+\begin{block}{Příklad 1}
+Mějme definován jazyk $L = \{ a.b^*.c \}$ a vstupní slovo $w = abbc$. \\
+Níže je znázorněn výpočet DFA nad vstupním slovem.
+\end{block}
+
+\begin{center}
+\begin{tikzpicture}
+
+\draw (0,0) circle [x radius=1, y radius=1] node [align=center] {q0};
+\draw (1,0) -- (2,0);
+\draw (2,0) -- (1.8,0.2);
+\draw (2,0) -- (1.8,-0.2);
+\draw (1.5,0.2) node {a};
+\draw[red] (3,0) circle [x radius=1, y radius=1] node [align=center] {q1};
+\draw[red, rounded corners=8pt] (3,1) -- (3.3,1.5) -- (3,2) -- (2.7,1.5) -- (2.8,1.3);
+\draw[red, thick] (3.5,1.5) node {b};
+\draw[red] (2.8,1.3) -- (2.6,1.5);
+\draw[red] (2.8,1.3) -- (3,1.5);
+\draw (4,0) -- (5,0);
+\draw (5,0) -- (4.8,0.2);
+\draw (5,0) -- (4.8,-0.2);
+\draw (4.5,0.2) node {c};
+\draw (6,0) circle [x radius=1, y radius=1] node [align=center] {F};
+\draw (6,0) circle [x radius=0.9, y radius=0.9];
+
+\end{tikzpicture}
+\end{center}
+
+Dále se pro dvojici (q1,b) provede přechod do q1 dvakrát.
+
+\end{frame}
+
+\begin{frame}
+\frametitle{Ukázka výpočtu 3}
+
+\begin{block}{Příklad 1}
+Mějme definován jazyk $L = \{ a.b^*.c \}$ a vstupní slovo $w = abbc$. \\
+Níže je znázorněn výpočet DFA nad vstupním slovem.
+\end{block}
+
+\begin{center}
+\begin{tikzpicture}
+
+\draw (0,0) circle [x radius=1, y radius=1] node [align=center] {q0};
+\draw (1,0) -- (2,0);
+\draw (2,0) -- (1.8,0.2);
+\draw (2,0) -- (1.8,-0.2);
+\draw (1.5,0.2) node {a};
+\draw (3,0) circle [x radius=1, y radius=1] node [align=center] {q1};
+\draw[rounded corners=8pt] (3,1) -- (3.3,1.5) -- (3,2) -- (2.7,1.5) -- (2.8,1.3);
+\draw (3.5,1.5) node {b};
+\draw (2.8,1.3) -- (2.6,1.5);
+\draw (2.8,1.3) -- (3,1.5);
+\draw[red] (4,0) -- (5,0);
+\draw[red] (5,0) -- (4.8,0.2);
+\draw[red] (5,0) -- (4.8,-0.2);
+\draw[red] (4.5,0.2) node {c};
+\draw[green] (6,0) circle [x radius=1, y radius=1] node [align=center] {F};
+\draw[green] (6,0) circle [x radius=0.9, y radius=0.9];
+
+\end{tikzpicture}
+\end{center}
+
+Nakonec se pro dvojici (q1,c) provede přechod do akceptujícího stavu F a výpočet je u konce.
+
+\end{frame}
+
+\section{Použité zdroje}
+
+\begin{frame}
+\frametitle{Použité zdroje}
+
+\begin{itemize}
+\item Konečný automat \\ {\footnotesize \url{https://matematika.cz/konecny-automat}}
+\item Nedeterministický konečný automat \\ {\footnotesize \url{https://matematika.cz/nedeterministicky-konecny-automat}}
+\end{itemize}
+\end{frame}
+
+\end{document}
